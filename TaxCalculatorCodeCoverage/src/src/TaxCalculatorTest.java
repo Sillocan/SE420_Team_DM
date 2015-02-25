@@ -1,6 +1,5 @@
 package src;
 
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -61,6 +60,7 @@ public class TaxCalculatorTest {
 		assertEquals(48385, t2.getTaxDue(), 0.01);
 	
 	}
+	
 	@Test
 	public void testTaxCalculationHeadOfHousehold() throws Exception {
 		TaxCalculatorInterface t1;
@@ -101,6 +101,7 @@ public class TaxCalculatorTest {
 		assertEquals(100604.35, t2.getTaxDue(), 0.01);
 
 	}
+	
 	@Test
 	public void testTaxCalculationMarriedFilingJointly() throws Exception {
 		TaxCalculatorInterface t1;
@@ -173,6 +174,7 @@ public class TaxCalculatorTest {
 		assertEquals(111575, t2.getTaxDue(), 0.01);
 
 	}
+	
 	@Test
 	public void testTaxCalculationSingle() throws Exception {
 		TaxCalculatorInterface t1;
@@ -202,7 +204,6 @@ public class TaxCalculatorTest {
 		assertEquals(40051.97, t2.getTaxDue(), 0.01);
 
 	}
-
 
 	/**
 	 * This test will verify that the short form of the constructor works
@@ -237,8 +238,6 @@ public class TaxCalculatorTest {
 			} catch (Exception e) {
 				// Exception should be generated here.
 			}
-
-			
 		
 	}
 
@@ -284,7 +283,6 @@ public class TaxCalculatorTest {
 		t.setGrossIncome(-1);
 		assertEquals(0, t.getGrossIncome(), 0.01);
 	}
-	
 	
 	/**
 	 * This method will verify that the getNetTaxRate calculation works properly for the module.
@@ -524,6 +522,7 @@ public class TaxCalculatorTest {
 		assertEquals(28.2865196078431, t1.getNetTaxRate(), 0.001);
 		assertEquals(28.2139102799169, t2.getNetTaxRate(), 0.001);
 	}
+	
 	@Test
 	public void testGetTaxableIncome() throws Exception {
 		TaxCalculatorInterface t1;
