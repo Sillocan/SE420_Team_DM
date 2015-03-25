@@ -1,3 +1,4 @@
+package application;
 
 /**
  * This interface defines the interface for a monthly commission calculator.  An implementation of this interface will be able to calculate the commission on sales in an appropriate fashion.
