@@ -2,6 +2,7 @@ package Tester;
 
 import org.junit.Test;
 
-public class Test {
+public class TestCalculator {
+	
 
 }
