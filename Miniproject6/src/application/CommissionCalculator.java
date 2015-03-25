@@ -84,7 +84,6 @@ public class CommissionCalculator implements iCommissionCalculator {
 				|| (employeeExperience == iCommissionCalculator.PROBATIONARY)) {
 			this.employeeExperience = employeeExperience;
 		}
-
 	}
 
 	@Override
@@ -198,7 +197,6 @@ public class CommissionCalculator implements iCommissionCalculator {
 			retVal = CommissionCalculator.MINIMUM_EXPERIENCED_SALES_FOR_COMMISSION;
 		} else {
 			retVal = 0.00;
-
 		}
 		return retVal;
 	}
