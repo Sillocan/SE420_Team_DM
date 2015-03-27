@@ -28,6 +28,9 @@ public class TestCalculator {
 		//test SalesTransaction()
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, -5);
 		calculator.addSale(9, 1000);
+		
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
 
@@ -52,54 +55,78 @@ public class TestCalculator {
 	}
 
 
-	/** This method...
+	/** This method tests the...
 	 * @author Alex Spradlin */
 	@Test 
 	public void testProbationaryLowerBound() {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
 
-		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500);
+		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //3% for 500
 
+		//unique lower value
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 
-		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1499);
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1499); //1999
 
+		//the minimum minus 1
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 
-		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 1);
+		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 1); //2000
 
+		//the minimum
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 		
-		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1);
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1); //2001
 		
-		//FOUND AN ERROR HERE
+		//one over the minimum
 		assertEquals(0.03, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		assertEquals(2001, calculator.getTotalSales(), 0);
 	}
+
 
 
 	/** This method...
 	 * @author Alex Spradlin */
 	@Test 
-	public void testProbationaryUpperBound() {
+	public void testUpperBound() {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9999); //2% rate for 9999
+		
+		//this is a unique middle value
+		assertEquals(159.98, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 40000); //2% rate for 49999
+		
+		//this is the upper minus 1
+		assertEquals(959.98, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50000
+		
+		//this is the upper
+		assertEquals(960.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50001
 
-		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9000);
-	}
+		//this is 1 over the upper
+		assertEquals(960.02, calculator.calculateCommission(), 0);
+		assertEquals(0.005, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9); //2% rate for 50010
 
-
-	/** This method...
-	 * @author Alex Spradlin */
-	@Test 
-	public void testProbationaryMiddle() {
-
-		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
-
+		//this is unique upper 
+		assertEquals(960.20, calculator.calculateCommission(), 0.005);
+		assertEquals(0.05, calculator.calculateBonusCommission(), 0.005);
 	}
 
 
@@ -133,14 +160,6 @@ public class TestCalculator {
 	 * @author  */
 	@Test 
 	public void testExpUpperBound() {
-
-	}
-
-
-	/** This method...
-	 * @author  */
-	@Test 
-	public void testExpMiddle() {
 
 	}
 }

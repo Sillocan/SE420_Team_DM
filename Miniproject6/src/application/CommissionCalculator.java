@@ -88,8 +88,11 @@ public class CommissionCalculator implements iCommissionCalculator {
 
 	@Override
 	public double calculateCommission() {
-		final double commissionRatesForProbationaryEmployee[] = { 2, 3,
-				1, 3 };
+
+		final double commissionRatesForProbationaryEmployee[] = { 0.02, 0.03, 0.01, 0.03 };
+		//AAS final double commissionRatesForProbationaryEmployee[] = { 2, 3, 1, 3 };
+		//AAS Corrected incorrect commission rate values
+		//AAS the values should be percentages
 		final double commissionRatesForExperiencedEmployee[] = { 0.04, 0.06,
 				0.015, 0.08 };
 
@@ -171,6 +174,7 @@ public class CommissionCalculator implements iCommissionCalculator {
 				netSales += s.getTransactionAmount();
 				bonusCommission += s.getTransactionAmount()
 						* bonusCommissionRate;
+				System.out.println("here " + netSales);
 			} else if ((netSales + s.getTransactionAmount()) >= minimumSalesForBonusCommission) {
 				// We need to determine how much of this sale qualifies for
 				// commission.
@@ -178,7 +182,11 @@ public class CommissionCalculator implements iCommissionCalculator {
 						.getTransactionAmount())
 						- minimumSalesForBonusCommission;
 				
+				netSales += s.getTransactionAmount();
+				//AAS this was missing from this and caused problems
+				
 				bonusCommission += commissionableAmount * bonusCommissionRate;
+				System.out.println("here " + commissionableAmount + " " + netSales + " " + s.getTransactionAmount() + " " + minimumSalesForBonusCommission);
 			} else {
 				// No commission. Simply go on.
 				netSales += s.getTransactionAmount();
