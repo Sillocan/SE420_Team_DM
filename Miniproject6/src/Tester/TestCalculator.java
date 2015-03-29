@@ -1,26 +1,18 @@
 package Tester;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import application.*;
 
-
-/** This class will... 
- * @author Chris Silvano, Alex Spradlin, Casey Layne
- * */
+/** This class will house all JUnit test cases for the
+ *  CommissionCalculator class application
+ *  - author Chris Silvano, Alex Spradlin, Casey Layne */
 public class TestCalculator {
 
-	
 	iCommissionCalculator calculator;
 
-	
-	/** This method tests the code that handles the creation of a salesman
-	 * that is neither probationary nor experienced. It then tests to see what
-	 * the minimum sales must be and tests the addSale() method in CommissionCalculator
-	 * for an invalid dollar amount.
-	 * @author Alex Spradlin */
+	/** This method tests an employee with no commission
+	 *  - author Alex Spradlin */
 	@Test 
 	public void testIncorrect() {
 		calculator = new CommissionCalculator("Bob", 2);
@@ -34,21 +26,51 @@ public class TestCalculator {
 		//test SalesTransaction()
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, -5);
 		calculator.addSale(9, 1000);
-
+		
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
-
-	/** This method tests the creation of a CommissionCalculator with parameters
-	 * for a probationary salesman. It also tests setting the employee experience to
-	 * probationary, ensuring that the name of the salesman matches with the parameter
-	 * passed to the CommissionCalculator's constructor, and checks that the minimum sales
-	 * required of a probationary salesman before earning commission matches with that
-	 * stated in the assignment.
-	 * @author Alex Spradlin */
+	/** This method tests the lower commission bound for probation 
+	 * - author Alex Spradlin and Chris Silvano */
 	@Test 
-	public void testProbationary() {
+	public void testProbationaryLowerBound() {
+
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
+
+		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //3% for 500
+
+		//unique lower value for probation with basic rate
+		//no commission
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1499); //1999
+
+		//the minimum minus 1 for probation with basic rate
+		//no commission
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+
+		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 1); //2000
+
+		//the minimum for probation with basic rate
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1); //2001
+		
+		//one over the minimum for probation with basic rate
+		assertEquals(0.03, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		assertEquals(2001, calculator.getTotalSales(), 0);
+	}
+	
+	/** This method tests the middle commission value for probation
+	 *  - author Alex Spradlin and Chris Silvano */
+	@Test 
+	public void testProbationaryMiddle() {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
 
@@ -60,142 +82,153 @@ public class TestCalculator {
 
 		//test getMinimumSales()
 		assertEquals(2000, calculator.getMinimumSales(), 0);
-
-
-		//boundaries are 500, 1999, 2000, 2001, 25000, 49999, 50000, 50001, 60000 
+		
+		//add a sale of $25000 for a middle value
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 25000);
+		
+		//test the probation commission and bonus commission
+		assertEquals(460.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
-
-	/** This method tests the lower sales boundaries for a probationary salesman. 
-	 * It tests a unique value below $2000, the value $1999, the value $2000, and
-	 * the value $2001 to see what the commission and bonus commission should be.
-	 * @author Alex Spradlin */
+	/** This method tests the upper commission bound for probation 
+	 * - author Alex Spradlin and Chris Silvano */
 	@Test 
-	public void testProbationaryLowerBound() {
+	public void testProbationaryUpperBound() {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
-
-		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //3% for 500
-
-		//unique lower value
-		assertEquals(0, calculator.calculateCommission(), 0);
-		assertEquals(0, calculator.calculateBonusCommission(), 0);
-
-		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1499); //1999
-
-		//the minimum minus 1
-		assertEquals(0, calculator.calculateCommission(), 0);
-		assertEquals(0, calculator.calculateBonusCommission(), 0);
-
-		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 1); //2000
-
-		//the minimum
-		assertEquals(0, calculator.calculateCommission(), 0);
-		assertEquals(0, calculator.calculateBonusCommission(), 0);
-
-		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1); //2001
-
-		//one over the minimum
-		assertEquals(0.03, calculator.calculateCommission(), 0);
-		assertEquals(0, calculator.calculateBonusCommission(), 0);
-
-		assertEquals(2001, calculator.getTotalSales(), 0);
-	}
-
-
-
-	/** This method tests the upper sales boundaries for a probationary salesman. 
-	 * It tests a unique value between $2000 and $50000, the value $49999, the value $50000, and
-	 * the value $50001 to see what the commission and bonus commission should be.
-	 * @author Alex Spradlin */
-	@Test 
-	public void testUpperBound() {
-
-		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
-
+		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9999); //2% rate for 9999
-
-		//this is a unique middle value
+		
+		//this is a unique middle value for probation with basic rate
 		assertEquals(159.98, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-
+		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 40000); //2% rate for 49999
-
-		//this is the upper minus 1
+		
+		//this is the upper minus 1 for probation with basic rate
 		assertEquals(959.98, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-
+		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50000
-
-		//this is the upper
+		
+		//this is the upper bound for probation with basic rate
 		assertEquals(960.0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-
+		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50001
 
-		//this is 1 over the upper
+		//this is 1 over the upper for probation with basic rate
+		//bonus commission applies
 		assertEquals(960.02, calculator.calculateCommission(), 0);
 		assertEquals(0.005, calculator.calculateBonusCommission(), 0);
-
+		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9); //2% rate for 50010
 
-		//this is unique upper 
+		//this is unique upper probation with basic rate
+		//bonus commission applies
 		assertEquals(960.20, calculator.calculateCommission(), 0.005);
 		assertEquals(0.05, calculator.calculateBonusCommission(), 0.005);
 	}
 
-
-	/** This method tests the creation of a CommissionCalculator with parameters
-	 * for an experienced salesman. It also tests setting the employee experience to
-	 * experience and checks that the minimum sales required of an experienced salesman 
-	 * before earning commission matches with that stated in the assignment.
-	 * @author Alex Spradlin */
+	/** This method tests the lower commission bound for experienced 
+	 * - author Chris Silvano */
 	@Test 
-	public void testExperienced() {
+	public void testExpLowerBound() {
 
-		calculator = new CommissionCalculator("Betty", iCommissionCalculator.EXPERIENCED);
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.EXPERIENCED);
+
+		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //8% for 500
+
+		//unique lower value for experienced with basic rate
+		//no commission
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 4499); //4999
+
+		//the minimum minus 1 for experienced with basic rate
+		//no commission
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+
+		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 1); //5000
+
+		//the minimum for experienced with basic rate
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1); //5001
+		
+		//one over the minimum for experienced with basic rate
+		assertEquals(0.06, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		assertEquals(5001, calculator.getTotalSales(), 0);
+	}
+	
+	/** This method tests the middle commission value for experience
+	 *  - author Chris Silvano */
+	@Test 
+	public void testExpMiddle() {
+		
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.EXPERIENCED);
 
 		//test setExperience()
 		calculator.setEmployeeExperience(iCommissionCalculator.EXPERIENCED);
 
+		//test getName()
+		assertEquals("Bob", calculator.getName());
+
 		//test getMinimumSales()
 		assertEquals(5000, calculator.getMinimumSales(), 0);
-
-
-		//boundaries are 500, 4999, 5000, 5001, 25000, 99999, 100000, 100001, 200000 
+		
+		//add a sale of $50000 for a middle value
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 50000);
+		
+		//test the probation commission and bonus commission
+		assertEquals(1800.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
-
-	/** This method...
-	 * @author */
-	@Test 
-	public void testExpLowerBound() {
-
-	}
-
-
-	/** This method...
-	 * @author */
+	/** This method tests the upper commission bound for experience 
+	 * - author Chris Silvano */
 	@Test 
 	public void testExpUpperBound() {
-
+		
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.EXPERIENCED);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 75000); //4% rate for 75000
+		
+		//this is a unique middle value for experience with basic rate
+		assertEquals(2800.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 24999); //4% rate for 99999
+		
+		//this is the upper minus 1 for experience with basic rate
+		assertEquals(3799.96, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //4% rate for 100000
+		
+		//this is the upper bound for experience with basic rate
+		assertEquals(3800.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //4% rate for 100001
+		
+		//this is 1 over the upper for experience with basic rate
+		//bonus commission applies
+		assertEquals(3800.04, calculator.calculateCommission(), 0);
+		assertEquals(0.015, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9); //4% rate for 100010
+		
+		//this is unique upper experience with basic rate
+		//bonus commission applies
+		assertEquals(3800.40, calculator.calculateCommission(), 0.005);
+		assertEquals(0.15, calculator.calculateBonusCommission(), 0.005);
 	}
-
-
-	/** This method will test a missing branch in SalesTransaction
-	 * regarding the replacement item property with an invalid
-	 * transaction type
-	 * 
-	 * @TODO - it is not hitting the code in the right place, but it
-	 * is covering something else that I do not know about
-	 * @author Chris Silvano */
-	@Test //(expected=Exception.class)
-	public void calculatorException(){
-
-		//assign values to a commission calculator
-		calculator = new CommissionCalculator("Bob", 2);
-
-		//try replacement type when adding sale to hit missing branch
-		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 100);
-	}
+	
 }
