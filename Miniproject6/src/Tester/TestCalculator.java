@@ -167,11 +167,28 @@ public class TestCalculator {
 		assertEquals(5001, calculator.getTotalSales(), 0);
 	}
 	
-	/** This method...
-	 * @author  */
+	/** This method tests the middle commission value for experience
+	 *  - author Chris Silvano */
 	@Test 
 	public void testExpMiddle() {
-		//boundaries are 25000,
+		
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.EXPERIENCED);
+
+		//test setExperience()
+		calculator.setEmployeeExperience(iCommissionCalculator.EXPERIENCED);
+
+		//test getName()
+		assertEquals("Bob", calculator.getName());
+
+		//test getMinimumSales()
+		assertEquals(5000, calculator.getMinimumSales(), 0);
+		
+		//add a sale of $50000 for a middle value
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 50000);
+		
+		//test the probation commission and bonus commission
+		assertEquals(1800.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
 	/** This method...
