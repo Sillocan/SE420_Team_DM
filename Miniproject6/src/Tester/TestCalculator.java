@@ -54,7 +54,7 @@ public class TestCalculator {
 
 
 	/** This method tests the...
-	 * @author Alex Spradlin */
+	 * @author Alex Spradlin and Chris Silvano */
 	@Test 
 	public void testProbationaryLowerBound() {
 
@@ -62,25 +62,27 @@ public class TestCalculator {
 
 		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //3% for 500
 
-		//unique lower value
+		//unique lower value for probation with basic rate
+		//no commission
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 
 		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1499); //1999
 
-		//the minimum minus 1
+		//the minimum minus 1 for probation with basic rate
+		//no commission
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 
 		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 1); //2000
 
-		//the minimum
+		//the minimum for probation with basic rate
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 		
 		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1); //2001
 		
-		//one over the minimum
+		//one over the minimum for probation with basic rate
 		assertEquals(0.03, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 		
@@ -90,46 +92,48 @@ public class TestCalculator {
 
 
 	/** This method...
-	 * @author Alex Spradlin */
+	 * @author Alex Spradlin and Chris Silvano */
 	@Test 
-	public void testUpperBoundProbationary() {
+	public void testProbationaryUpperBound() {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
 		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9999); //2% rate for 9999
 		
-		//this is a unique middle value
+		//this is a unique middle value for probation with basic rate
 		assertEquals(159.98, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 40000); //2% rate for 49999
 		
-		//this is the upper minus 1
+		//this is the upper minus 1 for probation with basic rate
 		assertEquals(959.98, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50000
 		
-		//this is the upper
+		//this is the upper bound for probation with basic rate
 		assertEquals(960.0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50001
 
-		//this is 1 over the upper
+		//this is 1 over the upper for probation with basic rate
+		//bonus commission applies
 		assertEquals(960.02, calculator.calculateCommission(), 0);
 		assertEquals(0.005, calculator.calculateBonusCommission(), 0);
 		
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9); //2% rate for 50010
 
-		//this is unique upper 
+		//this is unique upper probation with basic rate
+		//bonus commission applies
 		assertEquals(960.20, calculator.calculateCommission(), 0.005);
 		assertEquals(0.05, calculator.calculateBonusCommission(), 0.005);
 	}
 
 
 	/** This method...
-	 * @author Alex Spradlin */
+	 * @author Alex Spradlin and Chris Silvano*/
 	@Test 
 	public void testExperienced() {
 
@@ -138,7 +142,7 @@ public class TestCalculator {
 		//test setExperience()
 		calculator.setEmployeeExperience(iCommissionCalculator.EXPERIENCED);
 
-		//test getMinimumSales()
+		//test getMinimumSales() on boundary
 		assertEquals(5000, calculator.getMinimumSales(), 0);
 
 

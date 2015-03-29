@@ -61,7 +61,7 @@ public class SalesTransaction {
 	/**
 	 * This method will obtain the dollar amount for the transaction.
 	 * 
-	 * @return the transactionAmount This si the dollar amount of the
+	 * @return the transactionAmount This is the dollar amount of the
 	 *         transaction.
 	 */
 	public double getTransactionAmount() {
