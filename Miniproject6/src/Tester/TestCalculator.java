@@ -5,7 +5,7 @@ import org.junit.Test;
 import application.*;
 
 /** This class will house all JUnit test cases for the
- *  CommissionCalculator class
+ *  CommissionCalculator class application
  *  - author Chris Silvano, Alex Spradlin, Casey Layne */
 public class TestCalculator {
 
