@@ -138,7 +138,7 @@ public class TestCalculator {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.EXPERIENCED);
 
-		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //3% for 500
+		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //8% for 500
 
 		//unique lower value for experienced with basic rate
 		//no commission
@@ -191,12 +191,44 @@ public class TestCalculator {
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
-	/** This method...
-	 * @author  */
+	/** This method tests the upper commission bound for experience 
+	 * - author Chris Silvano */
 	@Test 
 	public void testExpUpperBound() {
-
-		//boundaries are 99999, 100000, 100001, 200000 
+		
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.EXPERIENCED);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 75000); //4% rate for 75000
+		
+		//this is a unique middle value for experience with basic rate
+		assertEquals(2800.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 24999); //4% rate for 99999
+		
+		//this is the upper minus 1 for experience with basic rate
+		assertEquals(3799.96, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //4% rate for 100000
+		
+		//this is the upper bound for experience with basic rate
+		assertEquals(3800.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //4% rate for 100001
+		
+		//this is 1 over the upper for experience with basic rate
+		//bonus commission applies
+		assertEquals(3800.04, calculator.calculateCommission(), 0);
+		assertEquals(0.015, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9); //4% rate for 100010
+		
+		//this is unique upper experience with basic rate
+		//bonus commission applies
+		assertEquals(3800.40, calculator.calculateCommission(), 0.005);
+		assertEquals(0.15, calculator.calculateBonusCommission(), 0.005);
 	}
 	
 }
