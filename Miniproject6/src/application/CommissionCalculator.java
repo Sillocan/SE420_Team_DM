@@ -174,7 +174,6 @@ public class CommissionCalculator implements iCommissionCalculator {
 				netSales += s.getTransactionAmount();
 				bonusCommission += s.getTransactionAmount()
 						* bonusCommissionRate;
-				System.out.println("here " + netSales);
 			} else if ((netSales + s.getTransactionAmount()) >= minimumSalesForBonusCommission) {
 				// We need to determine how much of this sale qualifies for
 				// commission.
@@ -186,7 +185,6 @@ public class CommissionCalculator implements iCommissionCalculator {
 				//AAS this was missing from this and caused problems
 				
 				bonusCommission += commissionableAmount * bonusCommissionRate;
-				System.out.println("here " + commissionableAmount + " " + netSales + " " + s.getTransactionAmount() + " " + minimumSalesForBonusCommission);
 			} else {
 				// No commission. Simply go on.
 				netSales += s.getTransactionAmount();
