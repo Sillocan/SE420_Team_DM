@@ -12,9 +12,14 @@ import application.*;
  * */
 public class TestCalculator {
 
+	
 	iCommissionCalculator calculator;
 
-	/** This method...
+	
+	/** This method tests the code that handles the creation of a salesman
+	 * that is neither probationary nor experienced. It then tests to see what
+	 * the minimum sales must be and tests the addSale() method in CommissionCalculator
+	 * for an invalid dollar amount.
 	 * @author Alex Spradlin */
 	@Test 
 	public void testIncorrect() {
@@ -29,13 +34,18 @@ public class TestCalculator {
 		//test SalesTransaction()
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, -5);
 		calculator.addSale(9, 1000);
-		
+
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
 
-	/** This method...
+	/** This method tests the creation of a CommissionCalculator with parameters
+	 * for a probationary salesman. It also tests setting the employee experience to
+	 * probationary, ensuring that the name of the salesman matches with the parameter
+	 * passed to the CommissionCalculator's constructor, and checks that the minimum sales
+	 * required of a probationary salesman before earning commission matches with that
+	 * stated in the assignment.
 	 * @author Alex Spradlin */
 	@Test 
 	public void testProbationary() {
@@ -56,7 +66,9 @@ public class TestCalculator {
 	}
 
 
-	/** This method tests the...
+	/** This method tests the lower sales boundaries for a probationary salesman. 
+	 * It tests a unique value below $2000, the value $1999, the value $2000, and
+	 * the value $2001 to see what the commission and bonus commission should be.
 	 * @author Alex Spradlin */
 	@Test 
 	public void testProbationaryLowerBound() {
@@ -80,49 +92,51 @@ public class TestCalculator {
 		//the minimum
 		assertEquals(0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-		
+
 		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1); //2001
-		
+
 		//one over the minimum
 		assertEquals(0.03, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-		
+
 		assertEquals(2001, calculator.getTotalSales(), 0);
 	}
 
 
 
-	/** This method...
+	/** This method tests the upper sales boundaries for a probationary salesman. 
+	 * It tests a unique value between $2000 and $50000, the value $49999, the value $50000, and
+	 * the value $50001 to see what the commission and bonus commission should be.
 	 * @author Alex Spradlin */
 	@Test 
 	public void testUpperBound() {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
-		
+
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9999); //2% rate for 9999
-		
+
 		//this is a unique middle value
 		assertEquals(159.98, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-		
+
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 40000); //2% rate for 49999
-		
+
 		//this is the upper minus 1
 		assertEquals(959.98, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-		
+
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50000
-		
+
 		//this is the upper
 		assertEquals(960.0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
-		
+
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 1); //2% rate for 50001
 
 		//this is 1 over the upper
 		assertEquals(960.02, calculator.calculateCommission(), 0);
 		assertEquals(0.005, calculator.calculateBonusCommission(), 0);
-		
+
 		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 9); //2% rate for 50010
 
 		//this is unique upper 
@@ -131,7 +145,10 @@ public class TestCalculator {
 	}
 
 
-	/** This method...
+	/** This method tests the creation of a CommissionCalculator with parameters
+	 * for an experienced salesman. It also tests setting the employee experience to
+	 * experience and checks that the minimum sales required of an experienced salesman 
+	 * before earning commission matches with that stated in the assignment.
 	 * @author Alex Spradlin */
 	@Test 
 	public void testExperienced() {
@@ -150,7 +167,7 @@ public class TestCalculator {
 
 
 	/** This method...
-	 * @author  */
+	 * @author */
 	@Test 
 	public void testExpLowerBound() {
 
@@ -158,22 +175,13 @@ public class TestCalculator {
 
 
 	/** This method...
-	 * @author  */
+	 * @author */
 	@Test 
 	public void testExpUpperBound() {
 
 	}
-<<<<<<< HEAD
-=======
 
 
-	/** This method...
-	 * @author  */
-	@Test 
-	public void testExpMiddle() {
-
-	}
-	
 	/** This method will test a missing branch in SalesTransaction
 	 * regarding the replacement item property with an invalid
 	 * transaction type
@@ -183,12 +191,11 @@ public class TestCalculator {
 	 * @author Chris Silvano */
 	@Test //(expected=Exception.class)
 	public void calculatorException(){
-		
+
 		//assign values to a commission calculator
 		calculator = new CommissionCalculator("Bob", 2);
-		
+
 		//try replacement type when adding sale to hit missing branch
 		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 100);
 	}
->>>>>>> origin/master
 }
