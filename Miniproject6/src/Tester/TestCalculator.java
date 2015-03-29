@@ -131,21 +131,6 @@ public class TestCalculator {
 		assertEquals(0.05, calculator.calculateBonusCommission(), 0.005);
 	}
 
-
-	/** This method...
-	 * @author Alex Spradlin and Chris Silvano*/
-	@Test 
-	public void testExperienced() {
-
-		calculator = new CommissionCalculator("Betty", iCommissionCalculator.EXPERIENCED);
-
-		//test setExperience()
-		calculator.setEmployeeExperience(iCommissionCalculator.EXPERIENCED);
-
-		//test getMinimumSales() on boundary
-		assertEquals(5000, calculator.getMinimumSales(), 0);
-	}
-
 	/** This method...
 	 * @author  */
 	@Test 
