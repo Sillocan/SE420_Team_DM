@@ -131,12 +131,40 @@ public class TestCalculator {
 		assertEquals(0.05, calculator.calculateBonusCommission(), 0.005);
 	}
 
-	/** This method...
-	 * @author  */
+	/** This method tests the lower commission bound for experienced 
+	 * - author Chris Silvano */
 	@Test 
 	public void testExpLowerBound() {
-		//boundaries are 500, 4999, 5000, 5001
 
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.EXPERIENCED);
+
+		calculator.addSale(iCommissionCalculator.CONSULTING_ITEM, 500); //3% for 500
+
+		//unique lower value for experienced with basic rate
+		//no commission
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 4499); //4999
+
+		//the minimum minus 1 for experienced with basic rate
+		//no commission
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+
+		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 1); //5000
+
+		//the minimum for experienced with basic rate
+		assertEquals(0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		calculator.addSale(iCommissionCalculator.MAINTENANCE_ITEM, 1); //5001
+		
+		//one over the minimum for experienced with basic rate
+		assertEquals(0.06, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+		
+		assertEquals(5001, calculator.getTotalSales(), 0);
 	}
 	
 	/** This method...
