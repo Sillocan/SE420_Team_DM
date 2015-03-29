@@ -1,11 +1,8 @@
 package Tester;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import application.*;
-
 
 /** This class will... 
  * @author Chris Silvano, Alex Spradlin, Casey Layne
@@ -95,7 +92,7 @@ public class TestCalculator {
 	/** This method...
 	 * @author Alex Spradlin */
 	@Test 
-	public void testUpperBound() {
+	public void testUpperBoundProbationary() {
 
 		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
 		
@@ -163,8 +160,6 @@ public class TestCalculator {
 	public void testExpUpperBound() {
 
 	}
-<<<<<<< HEAD
-=======
 
 
 	/** This method...
@@ -174,21 +169,4 @@ public class TestCalculator {
 
 	}
 	
-	/** This method will test a missing branch in SalesTransaction
-	 * regarding the replacement item property with an invalid
-	 * transaction type
-	 * 
-	 * @TODO - it is not hitting the code in the right place, but it
-	 * is covering something else that I do not know about
-	 * @author Chris Silvano */
-	@Test //(expected=Exception.class)
-	public void calculatorException(){
-		
-		//assign values to a commission calculator
-		calculator = new CommissionCalculator("Bob", 2);
-		
-		//try replacement type when adding sale to hit missing branch
-		calculator.addSale(iCommissionCalculator.REPLACEMNET_ITEM, 100);
-	}
->>>>>>> origin/master
 }
