@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import application.*;
 
-/** This class will... 
- * @author Chris Silvano, Alex Spradlin, Casey Layne
- * */
+/** This class will house all JUnit test cases for the
+ *  CommissionCalculator class
+ *  - author Chris Silvano, Alex Spradlin, Casey Layne */
 public class TestCalculator {
 
 	iCommissionCalculator calculator;
