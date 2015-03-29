@@ -144,15 +144,13 @@ public class TestCalculator {
 
 		//test getMinimumSales() on boundary
 		assertEquals(5000, calculator.getMinimumSales(), 0);
-
-
-		//boundaries are 500, 4999, 5000, 5001, 25000, 99999, 100000, 100001, 200000 
 	}
 
 	/** This method...
 	 * @author  */
 	@Test 
 	public void testExpLowerBound() {
+		//boundaries are 500, 4999, 5000, 5001
 
 	}
 	
@@ -160,7 +158,7 @@ public class TestCalculator {
 	 * @author  */
 	@Test 
 	public void testExpMiddle() {
-
+		//boundaries are 25000,
 	}
 
 	/** This method...
@@ -168,6 +166,7 @@ public class TestCalculator {
 	@Test 
 	public void testExpUpperBound() {
 
+		//boundaries are 99999, 100000, 100001, 200000 
 	}
 	
 }
