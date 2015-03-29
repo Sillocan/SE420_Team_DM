@@ -11,8 +11,8 @@ public class TestCalculator {
 
 	iCommissionCalculator calculator;
 
-	/** This method...
-	 * @author Alex Spradlin */
+	/** This method tests an employee with no commission
+	 *  - author Alex Spradlin */
 	@Test 
 	public void testIncorrect() {
 		calculator = new CommissionCalculator("Bob", 2);
@@ -31,30 +31,8 @@ public class TestCalculator {
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
-
-	/** This method...
-	 * @author Alex Spradlin */
-	@Test 
-	public void testProbationary() {
-
-		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
-
-		//test setExperience()
-		calculator.setEmployeeExperience(iCommissionCalculator.PROBATIONARY);
-
-		//test getName()
-		assertEquals("Bob", calculator.getName());
-
-		//test getMinimumSales()
-		assertEquals(2000, calculator.getMinimumSales(), 0);
-
-
-		//boundaries are 500, 1999, 2000, 2001, 25000, 49999, 50000, 50001, 60000 
-	}
-
-
-	/** This method tests the...
-	 * @author Alex Spradlin and Chris Silvano */
+	/** This method tests the lower commission bound for probation 
+	 * - author Alex Spradlin and Chris Silvano */
 	@Test 
 	public void testProbationaryLowerBound() {
 
@@ -88,11 +66,33 @@ public class TestCalculator {
 		
 		assertEquals(2001, calculator.getTotalSales(), 0);
 	}
+	
+	/** This method tests the middle commission value for probation
+	 *  - author Alex Spradlin and Chris Silvano */
+	@Test 
+	public void testProbationaryMiddle() {
 
+		calculator = new CommissionCalculator("Bob", iCommissionCalculator.PROBATIONARY);
 
+		//test setExperience()
+		calculator.setEmployeeExperience(iCommissionCalculator.PROBATIONARY);
 
-	/** This method...
-	 * @author Alex Spradlin and Chris Silvano */
+		//test getName()
+		assertEquals("Bob", calculator.getName());
+
+		//test getMinimumSales()
+		assertEquals(2000, calculator.getMinimumSales(), 0);
+		
+		//add a sale of $25000 for a middle value
+		calculator.addSale(iCommissionCalculator.BASIC_ITEM, 25000);
+		
+		//test the probation commission and bonus commission
+		assertEquals(460.0, calculator.calculateCommission(), 0);
+		assertEquals(0, calculator.calculateBonusCommission(), 0);
+	}
+
+	/** This method tests the upper commission bound for probation 
+	 * - author Alex Spradlin and Chris Silvano */
 	@Test 
 	public void testProbationaryUpperBound() {
 
@@ -149,27 +149,24 @@ public class TestCalculator {
 		//boundaries are 500, 4999, 5000, 5001, 25000, 99999, 100000, 100001, 200000 
 	}
 
-
 	/** This method...
 	 * @author  */
 	@Test 
 	public void testExpLowerBound() {
 
 	}
+	
+	/** This method...
+	 * @author  */
+	@Test 
+	public void testExpMiddle() {
 
+	}
 
 	/** This method...
 	 * @author  */
 	@Test 
 	public void testExpUpperBound() {
-
-	}
-
-
-	/** This method...
-	 * @author  */
-	@Test 
-	public void testExpMiddle() {
 
 	}
 	
