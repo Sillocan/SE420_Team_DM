@@ -11,7 +11,7 @@ public class TestCalculator {
 	
 	iCommissionCalculator calculator;
 	
-	/** This method tests an employee with no commission
+	/** This method tests an employee with no commission or an invalid sale
 	 *  - author Alex Spradlin */
 	@Test 
 	public void testIncorrect() {
