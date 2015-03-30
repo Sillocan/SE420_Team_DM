@@ -1,14 +1,11 @@
 package application;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 /**
- * This class will handle the calculatioon of employee commissions.
- * 
+ * This class will handle the calculation of employee commissions.
  * 
  */
 public class CommissionCalculator implements iCommissionCalculator {

@@ -8,10 +8,8 @@ import application.*;
  *  CommissionCalculator class application
  *  - author Chris Silvano, Alex Spradlin, Casey Layne */
 public class TestCalculator {
-
 	
 	iCommissionCalculator calculator;
-
 	
 	/** This method tests an employee with no commission
 	 *  - author Alex Spradlin */
@@ -33,7 +31,6 @@ public class TestCalculator {
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
-	
 	/** This method tests the lower commission bound for probation 
 	 * - author Alex Spradlin and Chris Silvano */
 	@Test 
@@ -70,7 +67,6 @@ public class TestCalculator {
 		assertEquals(2001, calculator.getTotalSales(), 0);
 	}
 	
-	
 	/** This method tests the middle commission value for probation
 	 *  - author Alex Spradlin and Chris Silvano */
 	@Test 
@@ -95,7 +91,6 @@ public class TestCalculator {
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
 
-	
 	/** This method tests the upper commission bound for probation 
 	 * - author Alex Spradlin and Chris Silvano */
 	@Test 
@@ -135,7 +130,6 @@ public class TestCalculator {
 		assertEquals(960.20, calculator.calculateCommission(), 0.005);
 		assertEquals(0.05, calculator.calculateBonusCommission(), 0.005);
 	}
-
 	
 	/** This method tests the lower commission bound for experienced 
 	 * - author Chris Silvano */
@@ -173,7 +167,6 @@ public class TestCalculator {
 		assertEquals(5001, calculator.getTotalSales(), 0);
 	}
 	
-	
 	/** This method tests the middle commission value for experience
 	 *  - author Chris Silvano */
 	@Test 
@@ -197,7 +190,6 @@ public class TestCalculator {
 		assertEquals(1800.0, calculator.calculateCommission(), 0);
 		assertEquals(0, calculator.calculateBonusCommission(), 0);
 	}
-
 	
 	/** This method tests the upper commission bound for experience 
 	 * - author Chris Silvano */
