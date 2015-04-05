@@ -33,15 +33,19 @@ public class LightTimer implements LightTimerInterface {
 	 * @see SecurityLightController.LightTimerInterface#startTimer(int)
 	 */
 	public void startTimer(int delay) {
+		
 		this.mydelay = delay;
-
+		
+		
 		if ((t != null) && (t.isAlive() == true)) {
 			// DO nothing, as the thread is already running.
 		} else {
+		
 			t = new Thread(new Runnable() {
-
+				
 				@Override
 				public void run() {
+
 					while (mydelay != 0) {
 						while (mydelay > 0) {
 							try {
@@ -49,10 +53,10 @@ public class LightTimer implements LightTimerInterface {
 							} catch (InterruptedException e) {
 							}
 							mydelay--;
-							System.out.println(mydelay);
 						}
 						callback
 								.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+
 					}
 				}
 			});

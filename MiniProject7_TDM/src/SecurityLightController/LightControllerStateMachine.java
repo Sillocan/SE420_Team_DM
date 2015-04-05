@@ -90,7 +90,8 @@ public class LightControllerStateMachine implements
 	private void updateState(int state) {
 		for (LightControllerStateMachineObserverInterface obs : this.observers) {
 			obs.updateLightState(state);
-			obs.updateLightState(state);
+			//AAS obs.updateLightState(state);
+			//this was here twice
 		}
 	}
 
@@ -181,14 +182,18 @@ public class LightControllerStateMachine implements
 			break;
 
 		case LightControllerStateMachineObserverInterface.MOTION_DETECTED:
-			tmr.startTimer(5);
+			tmr.startTimer(30);
+			//AAS tmr.startTimer(5);
+			//AAS this line is telling it to delay for only 5 s and not 30 s
 			light.turnLightOnFullBrightness();
-			//break;
+			break;
+			//AAS this break was commented out but it shouldn't have been
 
 		case LightControllerStateMachineObserverInterface.INTRUSION_DETECTED:
 			// Initialize the substate appropriately.
 			intrusionDetectionStateVariable = INTRUSION_DETECTED_LAMP_ON;
 
+			System.out.println("intrusion detected");
 			// Start the timer.
 			tmr.startTimer(1);
 
@@ -217,7 +222,7 @@ public class LightControllerStateMachine implements
 		// We will determine it through the case statement.
 		int destinationState = presentState;
 		// This variable will indicate if a state change is necessary.
-		boolean stateChange = true;
+		boolean stateChange = true; //TODO chris change this to false;
 
 		// This switch state will determine the destination state that we need
 		// to enter. Based on that, make the correct state changes.
@@ -320,6 +325,7 @@ public class LightControllerStateMachine implements
 
 					// Adjust the light setting.
 					light.turnLightOnFullBrightness();
+					
 				} else {
 					// Something went wrong. Start back with the initial
 					// conditions.
@@ -343,7 +349,7 @@ public class LightControllerStateMachine implements
 		// Now determine if an actual state change has occured. If so, invoke
 		// the exit action on the given state as well as the entry action for
 		// the new state.
-		if (stateChange = true) {
+		if (stateChange = true) { //TODO Chris this should be ==
 			// Invoke exit actions.
 			handleExitConditions(presentState);
 
