@@ -1,4 +1,4 @@
-package SecurityLightController;
+package src.SecurityLightController;
 
 import java.util.ArrayList;
 import java.util.List;

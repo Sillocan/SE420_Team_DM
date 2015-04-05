@@ -1,4 +1,4 @@
-package SecurityLightController;
+package src.SecurityLightController;
 
 /**
  * This interface defines that which is used for a light timer.

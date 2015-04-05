@@ -1,4 +1,4 @@
-package SecurityLightController;
+package src.SecurityLightController;
 
 /**
  * This class implements a light timer.  It is used to control the timeouts associated with a given light.

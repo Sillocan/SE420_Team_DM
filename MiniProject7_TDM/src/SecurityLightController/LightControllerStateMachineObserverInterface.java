@@ -1,4 +1,4 @@
-package SecurityLightController;
+package src.SecurityLightController;
 
 /**
  * This interface defines an interface which a class must implement if it

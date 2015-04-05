@@ -1,11 +1,10 @@
-package test;
+package src.test;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
-import SecurityLightController.*;
-import UI.*;
+import src.SecurityLightController.*;
+import src.SecurityLightController.LightControllerStateMachineObserverInterface;
+import src.UI.*;
 
 /** This class will house all JUnit test cases for the
  *  Security Light application
@@ -20,6 +19,7 @@ public class TestSecurityControl {
 	 *  - author Chris Silvano */
 	@Test 
 	public void securityAlarmTrippedNight() {
+		assertEquals(5, 5);
 
 	}
 	

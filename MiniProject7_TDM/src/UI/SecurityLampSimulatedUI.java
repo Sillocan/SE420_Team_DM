@@ -1,4 +1,4 @@
-package UI;
+package src.UI;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,8 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import SecurityLightController.LightControllerCommandInterface;
-import SecurityLightController.LightDeviceInterface;
+import src.SecurityLightController.LightControllerCommandInterface;
+import src.SecurityLightController.LightDeviceInterface;
 
 /**
  * This class implements a basic UI for usage with the light controller. It

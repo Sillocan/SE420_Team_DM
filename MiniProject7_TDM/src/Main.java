@@ -1,7 +1,8 @@
+package src;
 import javax.swing.JFrame;
-import SecurityLightController.LightControllerStateMachine;
-import SecurityLightController.LightTimer;
-import UI.SecurityLampSimulatedUI;
+import src.SecurityLightController.LightControllerStateMachine;
+import src.SecurityLightController.LightTimer;
+import src.UI.SecurityLampSimulatedUI;
 
 /**
  * This is the main class. It instantiates instances of the GUI and ties it

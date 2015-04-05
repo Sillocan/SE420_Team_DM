@@ -1,4 +1,4 @@
-package SecurityLightController;
+package src.SecurityLightController;
 
 /**
  * This interface defines the light controller interface. Included are the
