@@ -349,7 +349,10 @@ public class LightControllerStateMachine implements
 		// Now determine if an actual state change has occured. If so, invoke
 		// the exit action on the given state as well as the entry action for
 		// the new state.
-		if (stateChange = true) { //TODO Chris this should be ==
+		
+		//CWS changed stateChange = true to stateChange == true
+		//if statement expressions should be == not =
+		if (stateChange == true) {
 			// Invoke exit actions.
 			handleExitConditions(presentState);
 
