@@ -221,8 +221,11 @@ public class LightControllerStateMachine implements
 		// system.
 		// We will determine it through the case statement.
 		int destinationState = presentState;
+		
 		// This variable will indicate if a state change is necessary.
-		boolean stateChange = true; //TODO chris change this to false;
+		//CWS changed stateChange = true to stateChange = false
+		//CWS declaration of boolean variable indicating change should be false
+		boolean stateChange = false;
 
 		// This switch state will determine the destination state that we need
 		// to enter. Based on that, make the correct state changes.
@@ -351,7 +354,7 @@ public class LightControllerStateMachine implements
 		// the new state.
 		
 		//CWS changed stateChange = true to stateChange == true
-		//if statement expressions should be == not =
+		//CWS if statement expressions should be == not =
 		if (stateChange == true) {
 			// Invoke exit actions.
 			handleExitConditions(presentState);
