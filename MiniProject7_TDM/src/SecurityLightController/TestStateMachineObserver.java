@@ -2,6 +2,8 @@ package src.SecurityLightController;
 
 import static org.junit.Assert.*;
 
+/** This class allows for an observer to exist for the state machine
+ * @author Chris Silvano */
 public class TestStateMachineObserver implements
 LightControllerStateMachineObserverInterface{
 	
@@ -14,6 +16,7 @@ LightControllerStateMachineObserverInterface{
 			LAMP_ON_NIGHTIME_BRIGHTNESS, MOTION_DETECTED,
 			INTRUSION_DETECTED};
 
+	/** Allow for the change of the state of the state machine */
 	@Override
 	public void updateLightState(int newState) {
 		currentState = newState;
@@ -23,7 +26,7 @@ LightControllerStateMachineObserverInterface{
 
 	}
 
-	//test to see if state exists as a valid state
+	/** Test to see if state exists as a valid state */
 	public void assertToTestValidState() {
 		boolean isValidState = false;
 		
