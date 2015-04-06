@@ -416,7 +416,7 @@ public class TestSecurityControl {
 	}
 	
 	/** This method tests the LAMP_TIMER_EXPIRED event during Motion Detected state.
-	 * @author William Layne
+	 *  - author William Layne
 	 */
 	@Test
 	public void testTimerExpired(){
@@ -438,7 +438,7 @@ public class TestSecurityControl {
 	
 	/** This method tests the LAMP_TIMER_EXPIRED event during INTRUSION_DETECTED LAMP_ON state,
 	 *  and then check the LAMP_TIMER_EXPIRED event during INTRUSION_DETECTED LAMP_OFF state.
-	 *  @author William Layne
+	 *  - author William Layne
 	 */
 	@Test
 	public void testIntrusionDetectedLampOnExpired(){
