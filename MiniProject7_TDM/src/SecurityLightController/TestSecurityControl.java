@@ -21,7 +21,7 @@ public class TestSecurityControl {
 	SecurityLampSimulatedUI lampGUI;
 	
 	/** Set-up JUnit test cases. Allow for same initial state machine to be used
-	 */
+	 *  - author Chris Silvano */
 	@Before
 	public void setUpTests(){
 		testStateMachineObserver = new TestStateMachineObserver();
@@ -36,14 +36,16 @@ public class TestSecurityControl {
 		lightStateMachine.setTmr(new LightTimer(lightStateMachine));
 	}
 	
-	/** Test initial boot-up of system into correct state */
+	/** Test initial boot-up of system into correct state
+	 *  - author Chris Silvano */
 	@Test
 	public void initialStartUp(){
 		testStateMachineObserver.assertToTestValidState();
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
 	}
 	
-	/** This method
+	/** This method checks when it is night time that the alarm being tripped
+	 *  results in the security light turning and an intrusion being detected
 	 *  - author Chris Silvano */
 	@Test 
 	public void securityAlarmTrippedNight() {
@@ -55,10 +57,12 @@ public class TestSecurityControl {
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
-		
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
 	}
 	
-	/** This method
+	/** This method checks when it is night time that the alarm being tripped
+	 *  from motion being detected results in the security light turning and
+	 *  an intrusion being detected
 	 *  - author Chris Silvano */
 	@Test 
 	public void securityAlarmTrippedMotion() {
@@ -73,10 +77,12 @@ public class TestSecurityControl {
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
-
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
 	}
 	
-	/** This method
+	/** This method checks if clearing the alarm while the light is on
+	 *  with the intrusion being detected results in the system returning
+	 *  back to its night time mode with the light being off
 	 *  - author Chris Silvano */
 	@Test 
 	public void alarmClearedLampOn() {
@@ -88,13 +94,18 @@ public class TestSecurityControl {
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
-		
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
 		
 		lightStateMachine.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
+		
+		//test state of light
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 	}
 	
-	/** This method
+	/** This method checks if clearing the alarm while the light is on
+	 *  with the intrusion being detected results in the system returning
+	 *  back to its night time mode with the light being off
 	 *  - author Chris Silvano */
 	@Test 
 	public void alarmClearedLampOff() {
@@ -105,13 +116,17 @@ public class TestSecurityControl {
 		lightStateMachine.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
+		lightStateMachine.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+
 		//test state of light
-		
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 		
 		lightStateMachine.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
-	}
 		
+		//test state of light
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
+	}
 	
 	/** This method tests the state transition from Lamp Off Daylight to
 	 * Lamp Off Nighttime with the event LIGHT_SENSOR_DARKENED.
@@ -135,7 +150,6 @@ public class TestSecurityControl {
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 	}
 	
-	
 	/** This method tests the state transition from Lamp Off Nighttime to
 	 * Lamp Off Daylight with the event LIGHT_SENSOR_LIGHTENED.
 	 *  - author Alex Spradlin */
@@ -157,7 +171,6 @@ public class TestSecurityControl {
 		//check the state of the light
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 	}
-	
 	
 	/** This method tests the state transition from Lamp Off Daylight to
 	 * Lamp On Full with the event MANUAL_SWITCH_ON.
@@ -181,7 +194,6 @@ public class TestSecurityControl {
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
 	}
 	
-	
 	/** This method tests the state transition from Lamp On Full to
 	 * Lamp Off Daylight with the event MANUAL_SWITCH_OFF.
 	 *  - author Alex Spradlin */
@@ -203,7 +215,6 @@ public class TestSecurityControl {
 		//check the state of the light
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 	}
-	
 	
 	/** This method tests the state transition from Lamp Off Nighttime to
 	 * Lamp On Nighttime Brightness with the event MANUAL_SWITCH_ON.
@@ -227,7 +238,6 @@ public class TestSecurityControl {
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.DIM);
 	}
 	
-	
 	/** This method tests the state transition from Lamp On Nighttime Brightness to
 	 * Lamp Off Nighttime with the event MANUAL_SWITCH_OFF.
 	 *  - author Alex Spradlin */
@@ -249,7 +259,6 @@ public class TestSecurityControl {
 		//check the state of the light
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 	}
-	
 	
 	/** This method tests the state transition from Lamp On Full to
 	 * Lamp On Nighttime Brightness with the event LIGHT_SENSOR_DARKENED.
@@ -273,7 +282,6 @@ public class TestSecurityControl {
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.DIM);
 	}
 	
-	
 	/** This method tests the state transition from Lamp On Nighttime Brightness to
 	 * Lamp On Full with the event LIGHT_SENSOR_LIGHTENED.
 	 *  - author Alex Spradlin */
@@ -296,7 +304,6 @@ public class TestSecurityControl {
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
 	}
 	
-	
 	/** This method tests the state transition from Lamp Off Nighttime to
 	 * Motion Detected with the event MOTION_DETECTED.
 	 *  - author Alex Spradlin */
@@ -315,7 +322,6 @@ public class TestSecurityControl {
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.MOTION_DETECTED);
 	}
-	
 	
 	/** This method tests what happens when a signal tells it not to change states.
 	 *  - author Alex Spradlin */
@@ -336,7 +342,6 @@ public class TestSecurityControl {
 		//check the state of the light
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 	}
-	
 	
 	/** This method tests signalling an irrelevant event from the state Lamp On Full
 	 *  - author Alex Spradlin */
@@ -359,7 +364,6 @@ public class TestSecurityControl {
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
 	}
 	
-	
 	/** This method tests signalling an irrelevant event from the state Lamp Off Nighttime
 	 *  - author Alex Spradlin */
 	@Test 
@@ -381,7 +385,6 @@ public class TestSecurityControl {
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
 	}
 	
-	
 	/** This method tests signalling an irrelevant event from the state Lamp On Nighttime Brightness
 	 *  - author Alex Spradlin */
 	@Test 
@@ -402,7 +405,6 @@ public class TestSecurityControl {
 		//check the state of the light
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.DIM);
 	}
-	
 	
 	/** This method tests unsubscribing an observeer
 	 *  - author Alex Spradlin */
@@ -457,8 +459,7 @@ public class TestSecurityControl {
 		//check the final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.INTRUSION_DETECTED);
 		//check the light
-		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
-				
-				
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);				
 	}
+	
 }
