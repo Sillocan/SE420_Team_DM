@@ -46,15 +46,14 @@ public class TestSecurityControl {
 	 *  - author Chris Silvano */
 	@Test 
 	public void securityAlarmTrippedNight() {
+		
 		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
-		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);		
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
 		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
-		
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
-		assertEquals()
 		
 	}
 	
@@ -62,6 +61,17 @@ public class TestSecurityControl {
 	 *  - author Chris Silvano */
 	@Test 
 	public void securityAlarmTrippedMotion() {
+		
+		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
+		
+		lightStateMachine.signalAction(lightStateMachine.MOTION_DETECTED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.MOTION_DETECTED);
+		
+		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
+		
+		//test state of light
 
 	}
 	
@@ -69,14 +79,36 @@ public class TestSecurityControl {
 	 *  - author Chris Silvano */
 	@Test 
 	public void alarmClearedLampOn() {
-
+		
+		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
+		
+		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
+		
+		//test state of light
+		
+		
+		lightStateMachine.signalAction(lightStateMachine.ALARM_CLEARED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 	}
 	
 	/** This method
 	 *  - author Chris Silvano */
 	@Test 
 	public void alarmClearedLampOff() {
-
+		
+		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
+		
+		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
+		
+		//test state of light
+		
+		
+		lightStateMachine.signalAction(lightStateMachine.ALARM_CLEARED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 	}
 		
 }
