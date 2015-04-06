@@ -1,4 +1,4 @@
-package src;
+package src.main;
 import javax.swing.JFrame;
 import src.SecurityLightController.LightControllerStateMachine;
 import src.SecurityLightController.LightTimer;

@@ -28,10 +28,17 @@ public class TestSecurityControl {
 		
 		//subscribe for notifications
 		lightStateMachine.subscribe(testStateMachineObserver);
+<<<<<<< Updated upstream
 		
 		//create new instance of the GUI for light timer
 		lampGUI = new SecurityLampSimulatedUI(lightStateMachine);
 		lightStateMachine.setLight(lampGUI);
+=======
+
+		SecurityLampSimulatedUI cwrb1 = new SecurityLampSimulatedUI(lightStateMachine);
+
+		lightStateMachine.setLight(cwrb1);
+>>>>>>> Stashed changes
 		lightStateMachine.setTmr(new LightTimer(lightStateMachine));
 	}
 	
@@ -42,10 +49,16 @@ public class TestSecurityControl {
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
 	}
 	
+	private void updateState(int state) {
+		
+		lightStateMachine.setCurrentState(state);
+	}
+	
 	/** This method
 	 *  - author Chris Silvano */
 	@Test 
 	public void securityAlarmTrippedNight() {
+<<<<<<< Updated upstream
 		
 		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
@@ -55,6 +68,13 @@ public class TestSecurityControl {
 		
 		//test state of light
 		
+=======
+
+		//updateState(TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
+		//assertEquals(testStateMachineObserver.getCurrentState(), TestStateMachineObserver.);
+		//lightStateMachine.signalAction(request);
+		//assertEquals(testStateMachineObserver.getCurrentState(), TestStateMachineObserver.<>);
+>>>>>>> Stashed changes
 	}
 	
 	/** This method
@@ -94,8 +114,44 @@ public class TestSecurityControl {
 	}
 	
 	/** This method
-	 *  - author Chris Silvano */
+	 *  - author Alex Spradlin */
 	@Test 
+	public void lampOffDaylightSwitchOn() {
+
+	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+	public void lampOffDaylightSensorDark() {
+
+	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+	public void lampOffNighttimeSensorLight() {
+
+	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+	public void lampOffNighttimeMotion() {
+
+	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+	public void lampOnSwitchOff() {
+
+	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+<<<<<<< Updated upstream
 	public void alarmClearedLampOff() {
 		
 		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
@@ -109,6 +165,30 @@ public class TestSecurityControl {
 		
 		lightStateMachine.signalAction(lightStateMachine.ALARM_CLEARED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
+=======
+	public void lampOnAlarmTripped() {
+
+>>>>>>> Stashed changes
 	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+	public void lampOnNightSwitchOff() {
+
+	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+	public void lampOnNightSensorLight() {
+
+	}
+	
+	/** This method
+	 *  - author Alex Spradlin */
+	@Test 
+	public void lampOffNighttimeSwitchOn() {
 		
+	}
 }

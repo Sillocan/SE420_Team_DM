@@ -391,7 +391,20 @@ public class LightControllerStateMachine implements
 	 *            This is the desired state for the light controller.
 	 */
 	protected void setCurrentState(int currentState) {
+		
+		// Invoke exit actions.
+		handleExitConditions(this.currentState);
+
 		this.currentState = currentState;
+		
+		// Invoke entry actions.
+		handleEntryConditions(currentState);
+		
+		// Update the observers.
+		updateState(currentState);
+		
+		
+		//TODO changed this
 	}
 
 }
