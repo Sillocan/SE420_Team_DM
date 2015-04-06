@@ -2,13 +2,10 @@ package src.SecurityLightController;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.swing.JFrame;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import src.SecurityLightController.*;
-import src.UI.*;
 
 /** This class will house all JUnit test cases for the
  *  Security Light application
@@ -37,13 +34,7 @@ public class TestSecurityControl {
 	/** Test initial boot-up of system into correct state */
 	@Test
 	public void initialStartUp(){
-		
-		//doesn't pass without this line...
-		//it shouldn't need this line
-		//testStateMachineObserver.updateLightState(TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
-		
 		testStateMachineObserver.assertToTestValidState();
-		
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
 	}
 	

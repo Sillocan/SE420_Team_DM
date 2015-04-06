@@ -24,8 +24,8 @@ public class SecurityLampSimulatedUI extends JPanel implements
 
 	private static final long serialVersionUID = 1L;
 
-	private JComboBox overrideSwitch;
-	private JComboBox lightSensor;
+	private JComboBox<String> overrideSwitch;
+	private JComboBox<String> lightSensor;
 	private JLabel lamp;
 	private LightControllerCommandInterface lcsm;
 
@@ -66,7 +66,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.0;
 		String[] switchPositions = { "Off", "On" };
-		overrideSwitch = new JComboBox(switchPositions);
+		overrideSwitch = new JComboBox<String>(switchPositions);
 		this.add(overrideSwitch, gbc);
 
 		overrideSwitch.addActionListener(new ActionListener() {
@@ -101,7 +101,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.5;
 		String[] sensorOptions = { "Light", "Dark" };
-		lightSensor = new JComboBox(sensorOptions);
+		lightSensor = new JComboBox<String>(sensorOptions);
 		this.add(lightSensor, gbc);
 
 		lightSensor.addActionListener(new ActionListener() {
