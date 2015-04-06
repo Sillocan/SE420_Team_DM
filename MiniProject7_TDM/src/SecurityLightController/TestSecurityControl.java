@@ -42,7 +42,17 @@ public class TestSecurityControl {
 	 *  - author Chris Silvano */
 	@Test 
 	public void securityAlarmTrippedNight() {
-
+		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);		
+		
+		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		
+		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
+		
+		//test state of light
+		
+		//
+		
 	}
 	
 	/** This method
