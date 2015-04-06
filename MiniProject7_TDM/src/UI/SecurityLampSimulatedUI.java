@@ -27,6 +27,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 	private JComboBox<String> overrideSwitch;
 	private JComboBox<String> lightSensor;
 	private JLabel lamp;
+	private int lightState = LightDeviceInterface.OFF;
 	private LightControllerCommandInterface lcsm;
 
 	/**
@@ -182,6 +183,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 	 */
 	public void turnLightOff() {
 		this.lamp.setIcon(this.createImageIcon("dark.gif", "A darkened lamp"));
+		lightState = LightDeviceInterface.OFF;
 	}
 
 	/*
@@ -192,6 +194,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 	 */
 	public void turnLightOnFullBrightness() {
 		this.lamp.setIcon(this.createImageIcon("bright.gif", "A bright lamp"));
+		lightState = LightDeviceInterface.BRIGHT;
 
 	}
 
@@ -204,6 +207,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 	 */
 	public void turnLightOnNightimeBrightness() {
 		this.lamp.setIcon(this.createImageIcon("dim.gif", "A dim lamp"));
+		lightState = LightDeviceInterface.DIM;
 	}
 
 	/**
@@ -225,5 +229,12 @@ public class SecurityLampSimulatedUI extends JPanel implements
 			System.err.println("Couldn't find file: " + path);
 			return null;
 		}
+	}
+	
+	
+	/** This method is used to verify that the light is the correct brightness.
+	 * - author Alex Spradlin */
+	public int getBrightness() {
+		return lightState;
 	}
 }
