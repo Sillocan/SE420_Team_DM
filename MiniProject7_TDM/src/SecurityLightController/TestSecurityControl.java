@@ -11,8 +11,10 @@ import src.UI.*;
 public class TestSecurityControl {
 
 	//used to determine which state you are in
-	LightControllerStateMachineObserverInterface lightStateMachineInterface;
+	LightControllerStateMachineObserverInterface lightStateMachineObserver;
 	LightControllerStateMachine lightStateMachine;
+	LightTimerInterface lightTimerInterface;
+	LightDeviceInterface lightDeviceInterface;
 	
 	/** This method
 	 *  - author Chris Silvano */
@@ -21,7 +23,7 @@ public class TestSecurityControl {
 		
 		//initial test of program being in correct initial state
 		//this returns null pointer right now...
-		//assertEquals(lightStateMachine.getCurrentState(), lightStateMachineInterface.LAMP_ON_FULL_BRIGHTNESS);
+		assertEquals(lightStateMachine.getCurrentState(), lightStateMachineObserver.LAMP_ON_FULL_BRIGHTNESS);
 
 	}
 	
