@@ -30,16 +30,7 @@ public class TestSecurityControl {
 		//subscribe for notifications
 		lightStateMachine.subscribe(testStateMachineObserver);
 		
-		JFrame frame = new JFrame("Security Light Controller GUI");
-		SecurityLampSimulatedUI cwrb1 = new SecurityLampSimulatedUI(lightStateMachine);
-		frame.setContentPane(cwrb1);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frame.setBounds(300, 0, 20, 10);
-		frame.pack();
-		frame.setVisible(true);
-
-		lightStateMachine.setLight(cwrb1);
+		//new timer
 		lightStateMachine.setTmr(new LightTimer(lightStateMachine));
 	}
 	

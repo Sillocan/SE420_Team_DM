@@ -103,7 +103,9 @@ public class LightControllerStateMachine implements
 	 */
 	public void subscribe(LightControllerStateMachineObserverInterface obs) {
 		this.observers.add(obs);
-
+		
+		//CWS - added the update method to change state of observer
+		obs.updateLightState(getCurrentState());
 	}
 
 	/*
