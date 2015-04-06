@@ -410,4 +410,53 @@ public class TestSecurityControl {
 		//unsubscribe this
 		lightStateMachine.unsubscribe(testStateMachineObserver);
 	}
+	
+	/** This method tests the LAMP_TIMER_EXPIRED event during Motion Detected state.
+	 * @author William Layne
+	 */
+	@Test
+	public void testTimerExpired(){
+		//set initial state
+		lightStateMachine.setCurrentState(TestStateMachineObserver.MOTION_DETECTED);
+		
+		//test the initial state
+		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.MOTION_DETECTED);
+		
+		//signal event
+		lightStateMachine.signalAction(lightStateMachine.LAMP_TIMER_EXPIRED);
+		
+		//test final state
+		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
+		
+		//check state of the light
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
+	}
+	
+	/** This method tests the LAMP_TIMER_EXPIRED event during INTRUSION_DETECTED LAMP_ON state,
+	 *  and then check the LAMP_TIMER_EXPIRED event during INTRUSION_DETECTED LAMP_OFF state.
+	 *  @author William Layne
+	 */
+	@Test
+	public void testIntrusionDetectedLampOnExpired(){
+		//set initial state
+		lightStateMachine.setCurrentState(TestStateMachineObserver.INTRUSION_DETECTED);
+		//check if the lamp is on
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
+		//signal event
+		lightStateMachine.signalAction(lightStateMachine.LAMP_TIMER_EXPIRED);
+		//check the final state
+		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.INTRUSION_DETECTED);
+		//check the light
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.OFF);
+		
+		//check for the lamp off
+		//signal event
+		lightStateMachine.signalAction(lightStateMachine.LAMP_TIMER_EXPIRED);
+		//check the final state
+		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.INTRUSION_DETECTED);
+		//check the light
+		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
+				
+				
+	}
 }
