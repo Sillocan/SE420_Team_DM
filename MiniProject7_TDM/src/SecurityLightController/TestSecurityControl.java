@@ -20,6 +20,8 @@ public class TestSecurityControl {
 	TestStateMachineObserver testStateMachineObserver;
 	SecurityLampSimulatedUI lampGUI;
 	
+	/** Set-up JUnit test cases. Allow for same initial state machine to be used
+	 */
 	@Before
 	public void setUpTests(){
 		testStateMachineObserver = new TestStateMachineObserver();
@@ -46,10 +48,10 @@ public class TestSecurityControl {
 	@Test 
 	public void securityAlarmTrippedNight() {
 		
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
-		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
@@ -61,13 +63,13 @@ public class TestSecurityControl {
 	@Test 
 	public void securityAlarmTrippedMotion() {
 		
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
-		lightStateMachine.signalAction(lightStateMachine.MOTION_DETECTED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.MOTION_DETECTED);
 		
-		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
@@ -79,16 +81,16 @@ public class TestSecurityControl {
 	@Test 
 	public void alarmClearedLampOn() {
 		
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
-		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
 		
 		
-		lightStateMachine.signalAction(lightStateMachine.ALARM_CLEARED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 	}
 	
@@ -97,16 +99,16 @@ public class TestSecurityControl {
 	@Test 
 	public void alarmClearedLampOff() {
 		
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
-		lightStateMachine.signalAction(lightStateMachine.SECURITY_ALARM_TRIPPED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
 		
 		
-		lightStateMachine.signalAction(lightStateMachine.ALARM_CLEARED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 	}
 		
@@ -124,7 +126,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
@@ -147,7 +149,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_LIGHTENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
@@ -170,7 +172,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MANUAL_SWITCH_ON);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_FULL_BRIGHTNESS);
@@ -193,7 +195,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_FULL_BRIGHTNESS);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MANUAL_SWITCH_OFF);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
@@ -216,7 +218,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MANUAL_SWITCH_ON);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
@@ -239,7 +241,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MANUAL_SWITCH_OFF);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
@@ -262,7 +264,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_FULL_BRIGHTNESS);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_DARKENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
@@ -285,7 +287,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.LIGHT_SENSOR_LIGHTENED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_FULL_BRIGHTNESS);
@@ -308,7 +310,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MOTION_DETECTED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.MOTION_DETECTED);
@@ -326,7 +328,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
 		
 		//signal an event that shouldn't change states
-		lightStateMachine.signalAction(lightStateMachine.MANUAL_SWITCH_OFF);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_DAYLIGHT);
@@ -348,7 +350,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_FULL_BRIGHTNESS);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MOTION_DETECTED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_FULL_BRIGHTNESS);
@@ -370,7 +372,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MANUAL_SWITCH_OFF);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
@@ -392,7 +394,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
 		
 		//signal an event
-		lightStateMachine.signalAction(lightStateMachine.MOTION_DETECTED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
@@ -423,7 +425,7 @@ public class TestSecurityControl {
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.MOTION_DETECTED);
 		
 		//signal event
-		lightStateMachine.signalAction(lightStateMachine.LAMP_TIMER_EXPIRED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
 		
 		//test final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.LAMP_OFF_NIGHTIME);
@@ -443,7 +445,7 @@ public class TestSecurityControl {
 		//check if the lamp is on
 		assertEquals(lampGUI.getBrightness(), LightDeviceInterface.BRIGHT);
 		//signal event
-		lightStateMachine.signalAction(lightStateMachine.LAMP_TIMER_EXPIRED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
 		//check the final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.INTRUSION_DETECTED);
 		//check the light
@@ -451,7 +453,7 @@ public class TestSecurityControl {
 		
 		//check for the lamp off
 		//signal event
-		lightStateMachine.signalAction(lightStateMachine.LAMP_TIMER_EXPIRED);
+		lightStateMachine.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
 		//check the final state
 		assertEquals(lightStateMachine.getCurrentState(), TestStateMachineObserver.INTRUSION_DETECTED);
 		//check the light
