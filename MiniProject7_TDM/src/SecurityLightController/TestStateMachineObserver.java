@@ -39,9 +39,4 @@ LightControllerStateMachineObserverInterface{
 		assertTrue(isValidState);
 	}
 	
-	//return the current state of the machine
-	public int getState(){
-		return currentState;
-	}
-	
 }

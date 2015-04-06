@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import src.SecurityLightController.*;
+import src.UI.SecurityLampSimulatedUI;
 
 /** This class will house all JUnit test cases for the
  *  Security Light application
@@ -18,6 +19,7 @@ public class TestSecurityControl {
 	LightTimerInterface lightTimerInterface;
 	LightDeviceInterface lightDeviceInterface;
 	TestStateMachineObserver testStateMachineObserver;
+	SecurityLampSimulatedUI lampGUI;
 	
 	@Before
 	public void setUpTests(){
@@ -27,7 +29,9 @@ public class TestSecurityControl {
 		//subscribe for notifications
 		lightStateMachine.subscribe(testStateMachineObserver);
 		
-		//new timer
+		//create new instance of the GUI for light timer
+		lampGUI = new SecurityLampSimulatedUI(lightStateMachine);
+		lightStateMachine.setLight(lampGUI);
 		lightStateMachine.setTmr(new LightTimer(lightStateMachine));
 	}
 	
@@ -50,8 +54,7 @@ public class TestSecurityControl {
 		assertEquals(testStateMachineObserver.currentState, TestStateMachineObserver.INTRUSION_DETECTED);
 		
 		//test state of light
-		
-		//
+		assertEquals()
 		
 	}
 	
